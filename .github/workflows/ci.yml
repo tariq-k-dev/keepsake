@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Format check
+        run: pnpm exec prettier --check .
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck (client + worker)
+        run: pnpm typecheck
+      # Both projects: the pure rules engine (node) and the room Durable Object
+      # (workerd, real WebSockets and alarms). The second proves screen sync.
+      - name: Test
+        run: pnpm test
+      - name: Build
+        run: pnpm build
+
+  economy:
+    name: Economy balance check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      # Guards src/shared/constants.ts: if a scoring number changes, the
+      # simulation must still report a non-degenerate game.
+      - name: Simulate
+        run: pnpm sim 2000 | tee sim.txt
+      - name: Assert economy is not degenerate
+        run: |
+          if grep -q "DEGENERATE" sim.txt; then
+            echo "::error::Economy is degenerate - one strategy dominates. See docs/ECONOMY.md."
+            grep -B2 -A2 "DEGENERATE" sim.txt
+            exit 1
+          fi
+          echo "Economy healthy at current constants."

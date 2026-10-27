@@ -1,0 +1,26 @@
+overrides:
+  # @cloudflare/vite-plugin and @cloudflare/vitest-plugin each pull their own
+  # miniflare. When they disagree, `pnpm dev` starts an older workerd than the
+  # tests use and dies on the compatibility date. Force one runtime for both.
+  miniflare: 5.20261023.0-beta
+
+minimumReleaseAgeExclude:
+  - '@cloudflare/vitest-plugin@1.4.8'
+  - '@cloudflare/workers-types@5.20261027.1'
+  - '@typescript-eslint/eslint-plugin@8.72.1'
+  - '@typescript-eslint/parser@8.72.1'
+  - '@typescript-eslint/project-service@8.72.1'
+  - '@typescript-eslint/scope-manager@8.72.1'
+  - '@typescript-eslint/tsconfig-utils@8.72.1'
+  - '@typescript-eslint/type-utils@8.72.1'
+  - '@typescript-eslint/types@8.72.1'
+  - '@typescript-eslint/typescript-estree@8.72.1'
+  - '@typescript-eslint/utils@8.72.1'
+  - '@typescript-eslint/visitor-keys@8.72.1'
+  - miniflare@5.20261023.0-beta
+  - typescript-eslint@8.72.1
+  - wrangler@4.153.0
+
+allowBuilds:
+  esbuild: true
+  workerd: true

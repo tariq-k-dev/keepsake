@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "types": ["@cloudflare/vitest-plugin/types"],
+    "paths": {
+      "cloudflare:test": ["./node_modules/@cloudflare/vitest-plugin/types/cloudflare-test.d.ts"]
+    }
+  },
+  "include": ["src/worker", "src/shared", "test/room", "worker-configuration.d.ts"]
+}

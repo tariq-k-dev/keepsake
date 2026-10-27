@@ -1,0 +1,18 @@
+// Single Worker + Static Assets. Durable Objects cannot live in a Pages project,
+// so the app deploys as one Worker via `wrangler deploy`. The Vite plugin points
+// assets.directory at the client build output automatically.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "keepsake",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2026-10-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": {
+    "bindings": [{ "name": "ROOMS", "class_name": "RoomDO" }],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RoomDO"] }],
+  "assets": {
+    "not_found_handling": "single-page-application",
+  },
+  "observability": { "enabled": true },
+}

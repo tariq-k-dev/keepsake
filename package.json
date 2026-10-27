@@ -1,0 +1,52 @@
+{
+  "name": "keepsake",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "KEEPSAKE \u2014 a real-time sealed-bid auction party game for 2-8 players.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build && wrangler deploy",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "typecheck": "wrangler types && tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.worker.json",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage",
+    "test:watch": "vitest",
+    "cf-typegen": "wrangler types",
+    "sim": "tsx scripts/simulate.ts",
+    "sweep": "tsx scripts/sweep.ts"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.65.0",
+    "@cloudflare/vitest-plugin": "1.4.8",
+    "@cloudflare/workers-types": "5.20261027.1",
+    "@eslint/js": "10.0.1",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "24.10.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "@vitest/coverage-v8": "5.0.5",
+    "eslint": "10.13.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.13.0",
+    "miniflare": "5.20261023.0-beta",
+    "playwright-core": "^1.64.1",
+    "prettier": "3.9.10",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.21.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1",
+    "vite": "8.3.5",
+    "vitest": "5.0.5",
+    "wrangler": "4.153.0"
+  }
+}
