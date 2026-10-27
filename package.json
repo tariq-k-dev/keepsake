@@ -18,7 +18,8 @@
     "test:watch": "vitest",
     "cf-typegen": "wrangler types",
     "sim": "tsx scripts/simulate.ts",
-    "sweep": "tsx scripts/sweep.ts"
+    "sweep": "tsx scripts/sweep.ts",
+    "dev:clean": "node scripts/clean-dev.mjs && vite"
   },
   "dependencies": {
     "react": "19.3.1",

@@ -164,6 +164,27 @@ pnpm dev            # http://127.0.0.1:5173
 > `localhost` binds `::1` only, while Chromium resolves `localhost` to `127.0.0.1` — which makes
 > headless browser tests hang for 30 s per navigation.
 
+### If rounds stop advancing
+
+Symptom: the bidding screen sits there, the timer runs out, and nothing resolves. The dev server
+log shows `jsg.Error: database is locked: SQLITE_BUSY` and `SQLite alarm handler canceled`.
+
+This is **not a game bug**. Local Durable Object state lives in `.wrangler/state`, and if a
+`workerd` runtime from an earlier session is still alive it holds those SQLite files. The new
+server then cannot write, so alarms never fire. Killing a dev server's parent shell leaves the
+runtime running surprisingly often.
+
+```bash
+node scripts/clean-dev.mjs          # report leftovers, refuse to start if any
+node scripts/clean-dev.mjs --force  # stop them (supervisors first) and wipe local state
+# or, both at once:
+pnpm dev:clean
+```
+
+Verified: with a clean state, **8 concurrent full games run with zero lock errors**
+(`PROBE_GAMES=8 node scripts/lock-probe.mjs`). If you see this in CI or production it means
+something else — production Durable Objects are single-owner and cannot hit this.
+
 ### Try it with two players
 
 1. Open `http://127.0.0.1:5173`, enter a name, click **Create a room**.
@@ -173,18 +194,19 @@ pnpm dev            # http://127.0.0.1:5173
 
 ## Commands
 
-| Command          | What it does                                             |
-| ---------------- | -------------------------------------------------------- |
-| `pnpm dev`       | Vite client + Worker + Durable Object in local `workerd` |
-| `pnpm build`     | Production build (client + worker)                       |
-| `pnpm preview`   | Serve the production build in the Workers runtime        |
-| `pnpm test`      | Both suites: rules engine (Node) + room DO (`workerd`)   |
-| `pnpm test:cov`  | Same, with coverage                                      |
-| `pnpm lint`      | ESLint, zero warnings tolerated                          |
-| `pnpm typecheck` | `tsc --noEmit` for client and worker                     |
-| `pnpm sim`       | Economy simulation at the shipped constants              |
-| `pnpm sweep`     | Grid-search the economy parameters                       |
-| `pnpm deploy`    | Build and deploy to Cloudflare                           |
+| Command          | What it does                                              |
+| ---------------- | --------------------------------------------------------- |
+| `pnpm dev`       | Vite client + Worker + Durable Object in local `workerd`  |
+| `pnpm dev:clean` | Kill leftover `workerd` processes and wipe local DO state |
+| `pnpm build`     | Production build (client + worker)                        |
+| `pnpm preview`   | Serve the production build in the Workers runtime         |
+| `pnpm test`      | Both suites: rules engine (Node) + room DO (`workerd`)    |
+| `pnpm test:cov`  | Same, with coverage                                       |
+| `pnpm lint`      | ESLint, zero warnings tolerated                           |
+| `pnpm typecheck` | `tsc --noEmit` for client and worker                      |
+| `pnpm sim`       | Economy simulation at the shipped constants               |
+| `pnpm sweep`     | Grid-search the economy parameters                        |
+| `pnpm deploy`    | Build and deploy to Cloudflare                            |
 
 ## Testing
 
