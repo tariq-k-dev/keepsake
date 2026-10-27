@@ -3,6 +3,9 @@ overrides:
   # miniflare. When they disagree, `pnpm dev` starts an older workerd than the
   # tests use and dies on the compatibility date. Force one runtime for both.
   miniflare: 5.20261023.0-beta
+  # Dependabot advisory (GHSA, low): esbuild >=0.27.3 <0.28.1. `tsx` pulls an
+  # older copy; force the patched line so the tree carries one esbuild, not two.
+  esbuild: ^0.28.1
 
 minimumReleaseAgeExclude:
   - '@cloudflare/vitest-plugin@1.4.8'
