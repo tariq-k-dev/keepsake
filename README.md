@@ -6,8 +6,7 @@ Six heirlooms. Six sealed bids. Nobody shows their hand until the gavel falls.
 
 [![CI](https://github.com/tariq-k-dev/keepsake/actions/workflows/ci.yml/badge.svg)](https://github.com/tariq-k-dev/keepsake/actions/workflows/ci.yml)
 
-> **Live URL:** pending first deploy (`pnpm deploy`). This line gets the real link the moment it
-> exists — it is not pre-filled with a URL that would 404.
+**Live: [keepsake.tariq-k-dev.workers.dev](https://keepsake.tariq-k-dev.workers.dev)**
 
 No accounts, no installs. Share a 4-letter code, play from any phone.
 
@@ -233,6 +232,26 @@ Both suites run in CI on every push (64 tests). A third, browser-level layer exi
 `scripts/e2e.mjs` — 18 assertions across two real Chromium contexts, including a 320 px overflow
 check and the screenshots above. It needs a browser binary, so it runs manually; it was verified
 against both `pnpm dev` and the real `wrangler dev` build.
+
+## Configuration
+
+Only one variable exists, and it is public: the origin used to build absolute
+`og:image` / `og:url` URLs (crawlers do not resolve relative paths, and a relative
+`og:image` silently produces **no** preview card).
+
+| File              | Committed           | Purpose                                       |
+| ----------------- | ------------------- | --------------------------------------------- |
+| `.env.example`    | yes                 | template — copy to `.env` for local overrides |
+| `.env.production` | yes                 | public build default; read by `vite build`    |
+| `.env`            | **no** (gitignored) | your machine only                             |
+
+`.gitignore` targets `.env` specifically rather than `.env*`, because a `.env*`
+pattern would also drop `.env.production` — and then a fresh clone builds with an
+empty origin, blank social tags, and no obvious error.
+
+**Never put a secret in any `.env*` file that is committed.** `VITE_*` values are
+inlined into the client bundle and are visible to anyone. Runtime secrets for the
+Worker belong in `wrangler secret put`.
 
 ## Deploy
 
