@@ -66,8 +66,11 @@ export function Button({
   type?: 'button' | 'submit';
   className?: string;
 }) {
+  // `cursor-pointer` is explicit, not inherited: Tailwind v4 dropped the
+  // preflight rule that gave <button> a pointer, so a button defaults to the
+  // OS arrow and reads as inert on desktop.
   const base =
-    'inline-flex min-h-11 items-center justify-center rounded-lg px-4 text-sm font-semibold tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-400 disabled:cursor-not-allowed disabled:opacity-40';
+    'inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg px-4 text-sm font-semibold tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-400 disabled:cursor-not-allowed disabled:opacity-40';
   const styles = {
     primary: 'bg-brass-500 text-ink-950 hover:bg-brass-400 active:bg-brass-600',
     quiet: 'border border-ink-700 bg-ink-850 text-parchment-200 hover:border-parchment-600',

@@ -95,7 +95,7 @@ export function Lobby({ view }: { view: GameView }) {
                   key={bot.id}
                   type="button"
                   onClick={() => send({ t: 'removeBot', id: bot.id })}
-                  className="inline-flex min-h-9 items-center gap-1 rounded-full border border-ink-700 px-2.5 text-[11px] text-parchment-600 hover:border-burnt-600 hover:text-burnt-400"
+                  className="inline-flex min-h-9 cursor-pointer items-center gap-1 rounded-full border border-ink-700 px-2.5 text-[11px] text-parchment-600 hover:border-burnt-600 hover:text-burnt-400"
                 >
                   Remove {bot.name}
                 </button>

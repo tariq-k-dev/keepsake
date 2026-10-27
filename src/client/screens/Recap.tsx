@@ -185,7 +185,7 @@ function BidAudit({ view, me }: { view: GameView; me: PublicPlayer }) {
             value={who}
             onChange={(event) => setWho(event.target.value)}
             aria-label="Whose bidding to review"
-            className="min-h-9 rounded-lg border border-ink-700 bg-ink-850 px-2 text-xs text-parchment-300 focus:border-brass-500 focus:outline-none"
+            className="min-h-9 cursor-pointer rounded-lg border border-ink-700 bg-ink-850 px-2 text-xs text-parchment-300 focus:border-brass-500 focus:outline-none"
           >
             {view.players.map((player) => (
               <option key={player.id} value={player.id}>

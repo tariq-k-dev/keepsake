@@ -113,7 +113,7 @@ export function Landing({ initialCode }: { initialCode: string | null }) {
             placeholder="Heir"
             autoComplete="nickname"
             maxLength={16}
-            className="mt-1.5 min-h-11 w-full rounded-lg border border-ink-700 bg-ink-850 px-3 text-base text-parchment-50 placeholder:text-parchment-800 focus:border-brass-500 focus:outline-none"
+            className="mt-1.5 min-h-11 w-full cursor-text rounded-lg border border-ink-700 bg-ink-850 px-3 text-base text-parchment-50 placeholder:text-parchment-800 focus:border-brass-500 focus:outline-none"
           />
 
           <div className="mt-4 grid gap-2 sm:grid-cols-2">
@@ -137,7 +137,7 @@ export function Landing({ initialCode }: { initialCode: string | null }) {
                 autoComplete="off"
                 spellCheck={false}
                 aria-label="Room code"
-                className="min-h-11 min-w-0 flex-1 rounded-lg border border-ink-700 bg-ink-850 px-3 text-center font-display text-xl tracking-[0.4em] text-parchment-50 placeholder:text-parchment-800 focus:border-brass-500 focus:outline-none"
+                className="min-h-11 min-w-0 flex-1 cursor-text rounded-lg border border-ink-700 bg-ink-850 px-3 text-center font-display text-xl tracking-[0.4em] text-parchment-50 placeholder:text-parchment-800 focus:border-brass-500 focus:outline-none"
               />
               <Button onClick={join} disabled={busy} className="px-5">
                 Join

@@ -93,6 +93,26 @@ body {
   min-height: 100dvh;
 }
 
+/*
+ * Tailwind v4's preflight no longer gives <button> a pointer cursor, so every
+ * button in the app showed the OS arrow and read as inert. Set it once here as
+ * a safety net, and keep the explicit `cursor-pointer` on components too so the
+ * intent is visible at the call site. `:not(:disabled)` keeps disabled controls
+ * on the not-allowed cursor rather than inviting a click that cannot happen.
+ */
+@layer base {
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  select:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+
+  input[type='range']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
 /* Every player is looking at the same auction; do not let the layout jump. */
 * {
   scrollbar-gutter: stable;

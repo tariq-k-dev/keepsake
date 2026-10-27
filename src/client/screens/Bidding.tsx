@@ -150,7 +150,7 @@ export function Bidding({ view }: { view: GameView }) {
                     aria-label={
                       share === 0 ? 'Set your bid to zero' : `${label} of your coins — ${value}`
                     }
-                    className="flex min-h-11 flex-col items-center justify-center rounded-lg border border-ink-700 bg-ink-850 px-1 text-[11px] font-medium leading-tight text-parchment-400 hover:border-brass-600 hover:text-brass-300"
+                    className="flex min-h-11 cursor-pointer flex-col items-center justify-center rounded-lg border border-ink-700 bg-ink-850 px-1 text-[11px] font-medium leading-tight text-parchment-400 hover:border-brass-600 hover:text-brass-300"
                   >
                     <span>{label}</span>
                     <span className="text-[10px] tabular-nums text-parchment-800">{value}</span>

@@ -206,6 +206,7 @@ something else — production Durable Objects are single-owner and cannot hit th
 | `pnpm typecheck` | `tsc --noEmit` for client and worker                      |
 | `pnpm sim`       | Economy simulation at the shipped constants               |
 | `pnpm sweep`     | Grid-search the economy parameters                        |
+| `pnpm og`        | Regenerate the 1200×630 social card (`public/og.png`)     |
 | `pnpm deploy`    | Build and deploy to Cloudflare                            |
 
 ## Testing
